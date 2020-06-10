@@ -1,1 +1,33 @@
-0610 first
+<!-- 끝말잇기
+    알고리즘 문제
+    순서도
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+ 
+</head>
+<body>
+    <script>
+        var word="자바스"
+        while(true){
+            var newWord=prompt(word);
+            if(word[word.length-1]===newWord[0]){
+            console.log(word);
+            word=newWord; 
+            console.log(word)
+            }
+            else {console.log("틀렸습니다"); break;}
+
+        }
+    </script>
+
+
+</body>
+</html>
