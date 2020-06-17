@@ -1,0 +1,110 @@
+<!-- 숫자야구
+
+push : 마지막에 추가
+pop : 마지막 것 뽑기
+unshift : 처음에 추가 
+shift : 처음 것 뽑기
+splice(위치, 개수) : 위치로부터 개수만큼 배열에서 뽑는다
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+</head>
+
+<body>
+    <script>
+        var 바디 = document.body;
+
+        var 숫자후보;
+        var 숫자배열;
+        var 기회 = 10;
+        function 숫자함수() {                //숫자함수에 맞춰야 할 숫자 넣기
+            숫자후보 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            숫자배열 = [];
+            for (var i = 0; i < 4; i++) {
+                var 뽑은것 = 숫자후보.splice(Math.floor(Math.random() * (10 - i)), 1)[0];
+                숫자배열.push(뽑은것);
+            }
+            
+
+        }
+        숫자함수();
+        var 야구 = document.createElement('h1');
+        바디.append(야구);
+        var 결과 = document.createElement('h2');
+        바디.append(결과);
+        var 과정 = document.createElement('h3');
+        바디.append(과정);
+        var 폼 = document.createElement('form');
+        document.body.append(폼)
+
+        var 입력창 = document.createElement('input');
+        입력창.type = "number"
+        입력창.maxLength = "4"
+        폼.append(입력창);
+
+        var 버튼 = document.createElement('button');
+        버튼.textContent = '입력';
+        폼.append(버튼);
+        바디.append(결과);
+        야구.innerHTML = "숫자야구 " + 기회 + "회 남음";
+        var 기록 = [];
+
+        버튼.addEventListener('click', function 콜백함수(이벤트) {
+            console.log(숫자배열);
+            if (입력창.value.length > 4) {          //4개 이상 쓰면 숫자 초기화
+                결과.textContent = "4개만 써라"; return;
+            }
+            이벤트.preventDefault();
+            var 답 = 입력창.value;
+
+            if (답 === 숫자배열.join('')) {
+                결과.textContent = '홈런'
+                입력창.value = '';
+                입력창.focus();
+                과정.textContent="";
+                숫자함수();
+                기회=10;
+                야구.innerHTML = "숫자야구 " + 기회 + "회 남음";
+                
+                
+            } else {
+                결과.textContent = '';
+                var 답배열 = 답.split('');
+                var 스트라이크 = 0;
+                var 볼 = 0;
+                기록.push(답)
+                기회--;
+                야구.innerHTML = "숫자야구 " + 기회 + "회 남음";
+                for (var i = 0; i < 4; i++) {
+                    if (Number(답배열[i]) === 숫자배열[i]) {        //같은 자리인지 확인
+                        스트라이크++;
+                    } else if (숫자배열.indexOf(Number(답배열[i])) > -1) {    //같은 자리는 아니지만, 숫자가 겹치는지 확인
+                        볼++;
+                    }
+                }
+                과정.textContent += 스트라이크 + "스트라이크 " + 볼 + "볼" + 기록[기록.length - 1] + "\n";
+                입력창.value = '';
+                입력창.focus();
+                if (Number(기회)===0) {                      //10번 넘으면 실패하도록
+                    결과.textContent = "실패 ㅋㅋㅋ 답 :" + 숫자배열.join("");
+                    과정.textContent="";
+                    숫자함수();
+                    기회 = 10;
+                    야구.innerHTML = "숫자야구 " + 기회 + "회 남음";
+                    
+                    return;
+                }
+            }
+        })
+    </script>
+    <div id='divTag'></div>
+</body>
+
+</html>
