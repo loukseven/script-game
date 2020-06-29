@@ -1,0 +1,123 @@
+<!-- 로또
+# Array() 생성자 함수
+- 호출할 때 인자가 1개이고, 숫자일겨우 : 호출된 인자를 length로 갖는 빈 배열 생성
+-  그 외의 경우 : 호출된 인자를 요소로 갖는 배열 생성
+
+# fill( ) : 배열의 시작 인덱스부터 끝 인덱스의 이전까지 정적인 값 하나로 채움.
+
+# map( ) : 배열 내의 모든 요소 각각에 대하여 주어진 함수를 호출한 결과를 모아 새로운 배열을 반환.
+
+# sort()
+score.sort(); // 1, 10, 11, 2, 3, 4 
+              // ASCII 문자 순서로 정렬되어 숫자의 크기대로 나오지 않음
+
+
+/* 정상 동작 */
+score.sort(function(a, b) { // 오름차순
+    return a - b;
+    // 1, 2, 3, 4, 10, 11
+});
+
+score.sort(function(a, b) { // 내림차순
+    return b - a;
+    // 11, 10, 4, 3, 2, 1
+});
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>로또</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+
+    
+</head>
+<body>
+    <div>당첨숫자</div>
+    
+    <div id="결과창"></div>
+    <div class='보너스'></div>
+
+    <script>
+        var 후보군=Array(45).fill().map(function(요소, 인덱스){
+            return 인덱스+1;
+        })
+        // var 후보군=[];
+        // Array(45).fill().forEach(function(요소, 인덱스){
+        //     후보군[인덱스]=++인덱스;
+        // })
+       
+     
+        console.log(후보군)
+        var 셔플 = [];
+        while(후보군.length>0){
+            var 이동값 = 후보군.splice(Math.floor(Math.random() * 후보군.length),1);
+            셔플.push(이동값);
+        }
+        
+        var 보너스 = 셔플[셔플.length-1];
+        var 당첨숫자들=셔플.slice(0,6).sort(function(p,c){return p-c;});
+
+        var 결과창=document.getElementById("결과창");
+
+        function 공색칠하기(숫자, 결과창){
+            var 공= document.createElement("div");
+            공.textContent=숫자;
+            공.style.display='inline-block';
+            공.style.border='1px solid black';
+            공.style.borderRadius='10px';
+            공.style.width='20px';
+            공.style.height='20px';
+            공.style.textAlign='center';
+            공.style.marginRight='10px';
+            공.className='공아이디'+숫자;
+
+            var 배경색;
+            if(숫자<=10){
+                배경색='red';
+            } else if(숫자<=20){
+                배경색='orange';
+            } else if(숫자<=30){
+                배경색='yellow';
+            } else if(숫자<=40){
+                배경색='blue';
+            } else {
+                배경색='green';
+            }
+            공.style.backgroundColor=배경색;
+            결과창.appendChild(공);
+
+        }
+
+            setTimeout(function 비동기콜백함수(){
+            공색칠하기(당첨숫자들[0], 결과창);
+            }, 1000);
+            setTimeout(function 비동기콜백함수(){
+                공색칠하기(당첨숫자들[1], 결과창);
+            }, 2000);
+            setTimeout(function 비동기콜백함수(){
+                공색칠하기(당첨숫자들[2], 결과창);
+            }, 3000);
+            setTimeout(function 비동기콜백함수(){ 
+                공색칠하기(당첨숫자들[3], 결과창);
+            }, 4000);
+            setTimeout(function 비동기콜백함수(){
+                공색칠하기(당첨숫자들[4], 결과창);
+            }, 5000);
+            setTimeout(function 비동기콜백함수(){
+                공색칠하기(당첨숫자들[5], 결과창);
+            }, 6000);
+
+            setTimeout(function 비동기콜백함수(){
+                var 칸=document.getElementsByClassName('보너스')[0];
+                칸.textContent='보너스! :'; 공색칠하기(보너스,칸);
+            }, 7000)
+        
+    </script>
+    
+</body>
+</html>
